@@ -2,7 +2,7 @@ import org.apache.commons.lang.StringEscapeUtils
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
-object SparkSQLExample {
+object searchInterlink {
 
   def main(args: Array[String]): Unit = {
 
@@ -14,7 +14,7 @@ object SparkSQLExample {
     var path = "interlink.json"
     val rdd = spark.sparkContext.textFile(path)
 
-    val xx= ", \"Hà Nội\""
+    val xx = ", \"Hà Nội\""
 
     val newrdd = rdd.filter(x => StringEscapeUtils.unescapeJava(x).contains(xx)).
       map(S => S.split(",", 2)(0)).foreach(U => println(StringEscapeUtils.unescapeJava(U)))
