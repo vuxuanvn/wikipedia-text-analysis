@@ -1,3 +1,5 @@
+import java.io.{File, PrintWriter}
+
 import org.apache.spark.sql.{Column, SparkSession}
 
 import scala.util.matching.Regex
@@ -22,7 +24,7 @@ object searchPropernoun {
       .master("local[2]")
       .config("spark.executor.memory", "4G")
       .config("spark.driver.memory", "4G")
-      .appName("mmm")
+      .appName("Propernoun")
       .getOrCreate()
 
     val df = spark.read.json("test.json")
@@ -35,8 +37,11 @@ object searchPropernoun {
     val data = newDf.select(regexp_extractAll(newDf("raw_text"), lit(regex),lit(1)) as "properNoun")
     var properNoun : Set[String] = Set()
     data.select("properNoun").collect().foreach(x => x.toString().split(',').foreach(f => properNoun += f))
-
-    println(properNoun.size)
     
+//    println(properNoun.size)
+    val writer = new PrintWriter(new File("Result/search_propernouns.txt"))
+    writer.write("Tìm kiếm các bài danh từ riêng(Chữ cái đầu tiên viết hoa) \n\n\n")
+    properNoun.foreach(U => writer.write(U.replace("[","").replace("]","") + "\n"))
+    writer.close()
   }
 }
