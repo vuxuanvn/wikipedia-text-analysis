@@ -40,7 +40,7 @@ object searchPropernoun {
     
 //    println(properNoun.size)
     val writer = new PrintWriter(new File("Result/search_propernouns.txt"))
-    writer.write("Tìm kiếm các bài danh từ riêng(Chữ cái đầu tiên viết hoa) \n\n\n")
+    writer.write("Tìm kiếm các danh từ riêng(Chữ cái đầu tiên viết hoa) \n\n\n")
     properNoun.foreach(U => writer.write(U.replace("[","").replace("]","") + "\n"))
     writer.close()
   }
